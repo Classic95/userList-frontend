@@ -9,7 +9,8 @@ import { AgePipe } from '../pipe/age.pipe';
 @NgModule({
   declarations: [
     DashboardComponent,
-    AddEditUserComponent
+    AddEditUserComponent,
+    AgePipe,
   ],
   imports: [
     CommonModule,
