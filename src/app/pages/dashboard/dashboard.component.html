@@ -1,1 +1,36 @@
-<p>dashboard works!</p>
+<div class="w-100">
+    <div class="card shadow m-4">
+        <div class="card-header">
+            <h2 class="d-inline-block">User list</h2>
+            <button class="float-end btn btn-primary">+</button>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Search</span>
+                <input type="text" class="form-control" placeholder="Name, Email & Address" aria-label="Search" aria-describedby="basic-addon1">
+            </div>
+            <div class="row row-cols-1 row-cols-md-5 g-4">
+                <div class="col fade show" *ngFor="let user of userList">
+                  <div class="card" style="width: 18rem;">
+                    <img [src]="user.avatar" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{user.name}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><span class="fw-bold">Age:</span> {{user.dob | age}}</li>
+                      <li class="list-group-item"><span class="fw-bold">Address:</span> {{user.address}}</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <!-- <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div> -->
+            <div class="text-center" *ngIf="!userList.length">
+                <h4>No data found</h4>
+                <p>Click '+' add new user</p>
+            </div>
+        </div>
+    </div>
+</div>
