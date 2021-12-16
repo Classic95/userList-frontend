@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public loginForm: FormGroup;
+  public email: AbstractControl;
+  public password: AbstractControl;
 
-  ngOnInit(): void {
+  submitted: boolean = false
+  
+  constructor(
+    private fb: FormBuilder,
+    private SS: SharedService,
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+      password: ['', [Validators.required,]],//Validators.minLength(6)
+    });
+
+    this.email = this.loginForm.controls['email'];
+    this.password = this.loginForm.controls['password'];
   }
 
+  get f() { return this.loginForm.controls; }
+
+  ngOnInit(): void {}
+  
+  onSubmit() {
+    this.submitted = true
+    console.log('valid--', this.loginForm.valid)
+    if (this.loginForm.valid) {
+      return
+    }
+    return
+  }
 }

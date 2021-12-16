@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-image: url('https://cdn2.vectorstock.com/i/1000x1000/42/16/abstract-white-bubbles-seamless-background-pattern-vector-9694216.jpg');
+    /* filter: blur(10px); */
+    /* -webkit-filter: blur(10px); */
+}/* You can add global styles to this file, and also import other style files */

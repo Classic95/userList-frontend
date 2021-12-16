@@ -1,1 +1,36 @@
-<p>login works!</p>
+<div class="row justify-content-center align-items-center" style="height: 100vh;">
+    <div class="w-25">
+      <div class="card">
+        <div class="card-body">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <h2>Login</h2>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input formControlName="email" type="email" class="form-control"
+                    [class.is-invalid]="submitted && f['email'].errors"
+                    id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <div class="invalid-feedback" *ngIf="f['email'].errors">
+                    <small class="text-danger">
+                        Valid e-mail is required!
+                    </small>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input formControlName="password" type="password" class="form-control"
+                    [class.is-invalid]="submitted && f['password'].errors"
+                    id="exampleInputPassword1">
+                  <div class="invalid-feedback" *ngIf="f['password'].errors != null">
+                    <small class="text-danger">
+                        Password is required!
+                    </small>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>  
+        </div>
+      </div>
+    </div>
+</div>
