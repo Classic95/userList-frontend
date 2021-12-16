@@ -18,7 +18,10 @@ export class SharedService {
   }
 
   public getStorageItem(key: string) {
-    return JSON.parse(localStorage.getItem(key));
+    if (typeof localStorage.getItem(key) === 'string') {
+      return JSON.parse(localStorage.getItem(key) || '');
+    }
+    return localStorage.getItem(key);
   }
 
   public removeStorageItem(key: string) {
