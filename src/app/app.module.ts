@@ -9,7 +9,6 @@ import { AgePipe } from './pipe/age.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    AgePipe,
   ],
   imports: [
     BrowserModule,
