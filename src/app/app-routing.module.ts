@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -7,10 +7,10 @@ const routes: Routes = [
     redirectTo: 'auth',
     pathMatch: 'full',
   },
-  // {
-  // path: 'app',
-  // loadChildren: () => import('./web/web.module').then(m => m.WebModule),
-  // },
+  {
+    path: 'app',
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
@@ -18,7 +18,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(
+      routes, {
+      // enableTracing: true,
+      preloadingStrategy: PreloadAllModules,
+      useHash: true,
+      relativeLinkResolution: 'legacy'
+    })
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

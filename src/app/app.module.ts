@@ -4,18 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { AgePipe } from './pipe/age.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    AgePipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
