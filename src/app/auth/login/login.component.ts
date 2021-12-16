@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
-    private SS: SharedService,
+    public SS: SharedService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true
     console.log('valid--', this.loginForm.valid)
     if (this.loginForm.valid) {
+      this.SS.redirect('app/dashboard')
       return
     }
     return
