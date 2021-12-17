@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
           if (data.status == 'error') {
             throw new Error('Invalid Login');            
           }
+          this.GLOBAL.user = data.data
           this.SS.redirect('app/dashboard');
         },
         (error: HttpErrorResponse) => {

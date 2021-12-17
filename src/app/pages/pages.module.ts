@@ -5,6 +5,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgePipe } from '../pipe/age.pipe';
 import { UserCardComponent } from './user-card/user-card.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,5 +22,6 @@ import { UserCardComponent } from './user-card/user-card.component';
   ],
   exports: [UserCardComponent],
   providers: [AgePipe],
+  
 })
 export class PagesModule { }
