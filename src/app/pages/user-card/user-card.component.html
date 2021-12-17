@@ -1,0 +1,17 @@
+<div class="card">
+    <img [src]="user.avatar" class="card-img-top" alt="..."
+      onerror="this.src='https://picsum.photos/200'"/>
+    <div class="card-body">
+      <h5 class="card-title" data-toggle="modal"
+      data-target="#addEditUser" (click)="clickDetails()">{{ user.name }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <span class="fw-bold">Age:</span> {{ user.dob | age }}
+      </li>
+      <li class="list-group-item">
+        <span class="fw-bold">Address:</span> {{ user.address }}, {{ user.country }}
+      </li>
+    </ul>
+  </div>

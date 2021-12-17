@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgePipe } from '../pipe/age.pipe';
+import { UserCardComponent } from './user-card/user-card.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    AddEditUserComponent,
     AgePipe,
+    UserCardComponent,
   ],
   imports: [
     CommonModule,
@@ -18,6 +18,7 @@ import { AgePipe } from '../pipe/age.pipe';
     FormsModule,
     ReactiveFormsModule,
   ],
+  exports: [UserCardComponent],
   providers: [AgePipe],
 })
 export class PagesModule { }

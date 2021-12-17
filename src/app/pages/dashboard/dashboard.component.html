@@ -1,36 +1,154 @@
 <div class="w-100">
-    <div class="card shadow m-4">
-        <div class="card-header">
-            <h2 class="d-inline-block">User list</h2>
-            <button class="float-end btn btn-primary">+</button>
+  <div class="card shadow m-4">
+    <div class="card-header">
+      <h2 class="d-inline-block">User list</h2>
+      <button
+        class="float-right btn btn-primary"
+        data-toggle="modal"
+        data-target="#addEditUser"
+        (click)="initForm()"
+      >
+        +
+      </button>
+    </div>
+    <div class="card-body">
+      <!-- <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Search</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Name, Email & Address"
+          aria-label="Search"
+          aria-describedby="basic-addon1"
+        />
+      </div> -->
+      <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col fade show" *ngFor="let user of userList">
+          <app-user-card [user]="user" (click)="editUser(user)"></app-user-card>
         </div>
-        <div class="card-body">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Search</span>
-                <input type="text" class="form-control" placeholder="Name, Email & Address" aria-label="Search" aria-describedby="basic-addon1">
-            </div>
-            <div class="row row-cols-1 row-cols-md-5 g-4">
-                <div class="col fade show" *ngFor="let user of userList">
-                  <div class="card" style="width: 18rem;">
-                    <img [src]="user.avatar" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">{{user.name}}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span class="fw-bold">Age:</span> {{user.dob | age}}</li>
-                      <li class="list-group-item"><span class="fw-bold">Address:</span> {{user.address}}</li>
-                    </ul>
-                  </div>
-                </div>
-            </div>
-            <!-- <div class="spinner-border" role="status">
+      </div>
+      <!-- <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div> -->
-            <div class="text-center" *ngIf="!userList.length">
-                <h4>No data found</h4>
-                <p>Click '+' add new user</p>
-            </div>
-        </div>
+      <div class="text-center" *ngIf="!userList.length">
+        <h4>No data found</h4>
+        <p>Click '+' add new user</p>
+      </div>
     </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="addEditUser"
+  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addEditUserLabel" aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addEditUserLabel">Add user</h5>
+        <!-- <button type="button" class="btn btn-danger btn-close" data-dismiss="modal" aria-label="Close">Cancel</button> -->
+      </div>
+      <form [formGroup]="userForm" (ngSubmit)="submitUserDetails()">
+        <div class="modal-body">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="exampleInputName1" class="form-label">Name</label>
+              <input
+                formControlName="name"
+                type="name"
+                class="form-control"
+                [class.is-invalid]="submitted && f['name'].errors"
+                id="exampleInputName1"
+              />
+              <div class="invalid-feedback" *ngIf="f['name'].errors != null">
+                <small class="text-danger"> Name is required! </small>
+              </div>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >Email address</label
+              >
+              <input
+                formControlName="email"
+                type="email"
+                class="form-control"
+                [class.is-invalid]="submitted && f['email'].errors"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <div class="invalid-feedback" *ngIf="f['email'].errors">
+                <small class="text-danger"> Valid e-mail is required! </small>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="exampleInputName1" class="form-label">Date of birth</label>
+              <input
+                formControlName="dob"
+                type="date"
+                class="form-control"
+                [class.is-invalid]="submitted && f['dob'].errors"
+                id="exampleInputName1"
+              />
+              <div class="invalid-feedback" *ngIf="f['dob'].errors != null">
+                <small class="text-danger"> Date of birth is required! </small>
+              </div>
+            </div>
+            <div class="col">
+              <label for="exampleInputName1" class="form-label">Profile Avatar</label>
+              <input
+                formControlName="avatar"
+                type="file"
+                class="form-control"
+                [class.is-invalid]="submitted && f['avatar'].errors"
+                id="exampleInputName1"
+              />
+              <div class="invalid-feedback" *ngIf="f['avatar'].errors != null">
+                <small class="text-danger"> Name is required! </small>
+              </div>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >Country</label
+              >
+              <select class="custom-select"
+                formControlName="country"
+                  type="country"
+                  class="form-control"
+                  [class.is-invalid]="submitted && f['country'].errors"
+                  id="exampleInputEmail1"
+                  aria-describedby="countryHelp">
+                <option selected>Select country</option>
+                <option *ngFor="let country of countriesList" [value]="country.country">{{country.country}}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="f['country'].errors">
+                <small class="text-danger"> Valid e-mail is required! </small>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="exampleInputName1" class="form-label">Address</label>
+              <textarea
+                formControlName="address"
+                class="form-control"
+                [class.is-invalid]="submitted && f['address'].errors"
+                id="exampleInputName1"
+              ></textarea>
+              <div class="invalid-feedback" *ngIf="f['address'].errors != null">
+                <small class="text-danger"> Address should be valid! </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="initForm(true)" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

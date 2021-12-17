@@ -1,5 +1,5 @@
 body {
-    background: url('./assets/img/bg.jpg');
+    background-image: url('/assets/img/bg.jpeg');
     /* filter: blur(10px); */
     /* -webkit-filter: blur(10px); */
 }/* You can add global styles to this file, and also import other style files */
