@@ -11,8 +11,10 @@ import { GlobalSelectionService } from 'src/app/services/global-selection.servic
 import { SharedService } from 'src/app/services/shared.service';
 import { countryData } from 'src/data';
 
+
 import Swal from 'sweetalert2';
 import { UserCardComponent } from '../user-card/user-card.component';
+import { ChartModule } from 'primeng/chart';
 declare const $: any;
 
 @Component({
@@ -82,9 +84,24 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  basicData: any
   ngOnInit(): void {
     this.getUserList();
+    this.getGraph();
     this.countriesList = Object.values(countryData);
+  }
+
+  getGraph() {
+    this.basicData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+          {
+              label: 'My First dataset',
+              backgroundColor: '#42A5F5',
+              data: [65, 59, 80, 81, 56, 55, 40]
+          }
+      ]
+    };
   }
 
   get f() {
