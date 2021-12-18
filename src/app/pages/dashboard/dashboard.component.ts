@@ -87,8 +87,11 @@ export class DashboardComponent implements OnInit {
   basicData: any
   ngOnInit(): void {
     this.getUserList();
+    this.getGraph();
     this.countriesList = Object.values(countryData);
+  }
 
+  getGraph() {
     this.basicData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -98,7 +101,7 @@ export class DashboardComponent implements OnInit {
               data: [65, 59, 80, 81, 56, 55, 40]
           }
       ]
-  };
+    };
   }
 
   get f() {
