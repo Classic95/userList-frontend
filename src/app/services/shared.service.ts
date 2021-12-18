@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -5,6 +6,9 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class SharedService {
+  handleError(err: HttpErrorResponse): any {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(
     private router: Router
