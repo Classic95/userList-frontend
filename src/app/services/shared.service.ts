@@ -1,13 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
   handleError(err: HttpErrorResponse): any {
-    throw new Error('Method not implemented.');
+    Swal.fire({
+      icon: 'error',
+      title: 'Session expired'
+    })
+    this.redirect('auth/login')
   }
 
   constructor(

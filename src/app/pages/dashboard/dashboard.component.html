@@ -1,17 +1,33 @@
-<div class="w-100">
-  <div class="card shadow m-4">
-    <div class="card-header">
-      <h2 class="d-inline-block">User list</h2>
-      <button
-        class="float-right btn btn-primary"
-        data-toggle="modal"
+
+<div class="card shadow m-4">
+  <div class="card-body">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true">User list</a>
+      </li>
+      <li class="nav-item mr-auto" role="presentation">
+        <a class="nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="false">Analytics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link btn btn-primary" data-toggle="modal"
         data-target="#addEditUser"
-        (click)="initForm()"
-      >
-        +
-      </button>
-    </div>
-    <div class="card-body">
+        (click)="initForm()" href="javascript:void(0)">+</a>
+        <!-- <button
+          class="float-right btn btn-primary"
+          data-toggle="modal"
+          data-target="#addEditUser"
+          (click)="initForm()"
+        >
+          +
+        </button> -->
+      </li>
+      <!-- <li class="nav-item" role="presentation">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+      </li> -->
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="home-tab">
+        
       <!-- <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Search</span>
         <input
@@ -34,15 +50,18 @@
         <h4>No data found</h4>
         <p>Click '+' add new user</p>
       </div>
-    </div>
-  </div>
-  <div class="card shadow m-4">
-    <div class="card-body">
-      <h5>Analytics</h5>
+    
+      </div>
+      <div class="tab-pane fade" id="graph" role="tabpanel" aria-labelledby="profile-tab">
+        <h5>Analytics</h5>
       <p-chart type="bar" [data]="basicData" [options]="basicData"></p-chart>
+      
+      </div>
+      <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
     </div>
   </div>
 </div>
+
 <div
   class="modal fade"
   id="addEditUser"
@@ -102,15 +121,17 @@
             </div>
             <div class="col">
               <label for="exampleInputName1" class="form-label">Profile Avatar</label>
+              
+              <!-- formControlName="avatar" -->
               <input
-                formControlName="avatar"
                 type="file"
                 class="form-control"
                 [class.is-invalid]="submitted && f['avatar'].errors"
+                (change)="uploadProfile($event)"
                 id="exampleInputName1"
               />
               <div class="invalid-feedback" *ngIf="f['avatar'].errors != null">
-                <small class="text-danger"> Name is required! </small>
+                <small class="text-danger"> Profile image is required! </small>
               </div>
             </div>
             <div class="col">
@@ -128,7 +149,7 @@
                 <option *ngFor="let country of countriesList" [value]="country.country">{{country.country}}</option>
               </select>
               <div class="invalid-feedback" *ngIf="f['country'].errors">
-                <small class="text-danger"> Valid e-mail is required! </small>
+                <small class="text-danger"> Valid country is required! </small>
               </div>
             </div>
           </div>

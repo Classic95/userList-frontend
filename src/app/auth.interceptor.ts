@@ -17,9 +17,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
+    const token = this.SS.getStorageItem('token');
     request = request.clone({
       setHeaders: {
-        Authorization: 'Bearer ' + this.GLOBAL.user.token,
+        ContentType: 'multipart/form-data',
+        Authorization: 'Bearer ' + token,
       }
     });
     return next.handle(request)

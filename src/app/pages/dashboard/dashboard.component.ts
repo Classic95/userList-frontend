@@ -40,7 +40,16 @@ export class DashboardComponent implements OnInit {
   submitted: boolean = false;
   isEdit: boolean = false;
   user: any = {};
-
+  basicData:any = {
+    labels: [],
+    datasets: [
+        {
+            label: 'Users per Country',
+            backgroundColor: '#42A5F5',
+            data: []
+        }
+    ]
+  };
   constructor(
     private fb: FormBuilder,
     private age: AgePipe,
@@ -62,7 +71,7 @@ export class DashboardComponent implements OnInit {
         ],
       ],
       dob: ['', [Validators.required]],
-      avatar: [null, [Validators.required]],
+      avatar: [File, [Validators.required]],
       address: ['', [Validators.required, Validators.minLength(10)]],
       country: ['', [Validators.required]],
     });
@@ -81,31 +90,14 @@ export class DashboardComponent implements OnInit {
     if (close) {
       $('#addEditUser').modal('hide');
       this.getUserList();
+      this.getGraph();
     }
   }
 
-  basicData: any
   ngOnInit(): void {
     this.getUserList();
     this.getGraph();
     this.countriesList = Object.values(countryData);
-  }
-
-  getGraph() {
-    this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-          {
-              label: 'My First dataset',
-              backgroundColor: '#42A5F5',
-              data: [65, 59, 80, 81, 56, 55, 40]
-          }
-      ]
-    };
-  }
-
-  get f() {
-    return this.userForm.controls;
   }
 
   getUserList() {
@@ -115,22 +107,40 @@ export class DashboardComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.log('error', error);
-        Swal.fire({
-          icon: 'error',
-          title: error.error.message,
-          showConfirmButton: false,
+        this.SS.handleError(error);
+      }
+    ); 
+  }
+
+  get f() {
+    return this.userForm.controls;
+  }
+
+  getGraph() {
+    this.http.get<any[]>(this.GLOBAL.baseUrl + 'user/graph').subscribe(
+      (data: any) => {
+        this.basicData.labels = []
+        this.basicData.datasets[0].data = []
+        data.data.forEach((element: any) => {
+          this.basicData.labels.push(element._id)
+          this.basicData.datasets[0].data.push(element.count)
         });
+      },
+      (error: HttpErrorResponse) => {
+        console.log('error', error);
+        this.SS.handleError(error);
       }
     );
   }
 
   editUser(user: any) {
+    console.log('user----', user)
     this.isEdit = true;
     this.user = user;
     this.name.setValue(user.name);
     this.email.setValue(user.email);
     this.dob.setValue(user.dob);
-    this.avatar.setValue(user.avatar);
+    // this.avatar.setValue(user.avatar);
     this.address.setValue(user.address);
     this.country.setValue(user.country);
   }
@@ -143,12 +153,21 @@ export class DashboardComponent implements OnInit {
     this.submitted = true;
 
     console.log('this.userForm.value', this.userForm.value);
+    const formData = new FormData();
+    formData.append('name', this.name.value);
+    formData.append('email', this.email.value);
+    formData.append('dob', this.dob.value);
+    formData.append('avatar', this.avatar.value);
+    formData.append('address', this.address.value);
+    formData.append('country', this.country.value);
+
     if (this.userForm.valid) {
       if (this.isEdit) {
+        
         this.http
           .patch<any[]>(
             this.GLOBAL.baseUrl + 'user/' + this.user._id,
-            this.userForm.value
+            formData
           )
           .subscribe(
             (data: any) => {
@@ -169,7 +188,7 @@ export class DashboardComponent implements OnInit {
           );
       } else {
         this.http
-          .post<any[]>(this.GLOBAL.baseUrl + 'user', this.userForm.value)
+          .post<any[]>(this.GLOBAL.baseUrl + 'user', formData)
           .subscribe(
             (data: any) => {
               Swal.fire({
@@ -188,30 +207,14 @@ export class DashboardComponent implements OnInit {
             }
           );
       }
-      this.http
-        .patch<any[]>(
-          this.GLOBAL.baseUrl + 'user/' + this.user._id,
-          this.userForm.value
-        )
-        .subscribe(
-          (data: any) => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-            });
-            this.initForm(true);
-          },
-          (error: HttpErrorResponse) => {
-            console.log('error', error);
-            Swal.fire({
-              icon: 'error',
-              title: error.error.message,
-              showConfirmButton: false,
-            });
-          }
-        );
       return;
     }
     return;
+  }
+
+  uploadProfile(event: any) {
+    console.log(event.target.files[0]);
+    
+    this.avatar.setValue(event.target.files[0])
   }
 }

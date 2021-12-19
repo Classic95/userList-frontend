@@ -58,7 +58,9 @@ export class LoginComponent implements OnInit {
           if (data.status == 'error') {
             throw new Error('Invalid Login');            
           }
-          this.GLOBAL.user = data.data
+          this.SS.setStorageItem('token', data.data.token)
+          this.SS.setStorageItem('user', data.data.user)
+          this.GLOBAL.user = data.data.user
           this.SS.redirect('app/dashboard');
         },
         (error: HttpErrorResponse) => {
