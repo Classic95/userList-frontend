@@ -1,3 +1,8 @@
+#LOGIN creds
+email: admin@email.com
+password: admin
+
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
